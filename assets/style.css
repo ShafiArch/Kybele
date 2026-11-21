@@ -257,3 +257,16 @@ img[src*="legend-"] { max-width: 230px; width: 100%; }
 .chart .spd { fill: var(--accent); opacity: 0.18; }
 .chart .spd-line { stroke: var(--accent); stroke-width: 1.4; fill: none; }
 @media (max-width: 560px) { .calc label { grid-template-columns: 1fr auto; } .calc label span { grid-column: 1 / -1; } }
+
+/* case study: the model fills the left, its empty right side fades out, and the two heat maps
+   start over that space, so the model and its results read as one picture */
+.model-heat { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
+.model-heat .model { grid-column: 1 / 8; grid-row: 1; }
+.model-heat .model img { -webkit-mask-image: linear-gradient(90deg, #000 62%, transparent 92%); mask-image: linear-gradient(90deg, #000 62%, transparent 92%); }
+.model-heat .heat { grid-column: 6 / 13; grid-row: 1; position: relative; z-index: 1; gap: 10px; }
+.model-heat .heat figcaption { margin-top: 2px; }
+@media (max-width: 900px) {
+  .model-heat .model, .model-heat .heat { grid-column: 1 / -1; }
+  .model-heat .heat { grid-row: 2; }
+  .model-heat .model img { -webkit-mask-image: none; mask-image: none; }
+}
