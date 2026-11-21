@@ -18,6 +18,7 @@ No build step; `.nojekyll` makes GitHub serve the files as they are.
 | The page | `index.html`, `assets/style.css`, `assets/site.js` |
 | Pictures the page shows (`-l` opens on click, `-n` is the Night copy) | `img/` |
 | Originals, never changed | `Simulation for Food_v3.pptx` (Radiance Workshop 2026), `Kybele_logo_black and orange.png`, `case study UW.png`, `Three_channelworkflow.png`, `hyperspectral_workflow.png` |
+| The materials slide (spheres and Radiance definitions), source of `img/mat-*.webp` | `source/materials-slide.png` |
 | The script that makes `img/` | `tools/build_img.py` (Pillow, numpy, python-pptx; LibreOffice for the monthly renders) |
 
 The page runs: plants and light, spectral conversion (lux to PPFD, with a calculator that
