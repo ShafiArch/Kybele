@@ -98,5 +98,29 @@
       c.addEventListener("pointerleave", function () { charts.forEach(function (k) { k.classList.remove("hover"); }); out.textContent = ""; });
     });
   }
+
+  /* lux to PPFD: k for a black body source, from the V(lambda) and PAR curves in the chart */
+  var S = window.KYBELE_SPEC, cct = document.getElementById("cct");
+  if (S && cct) {
+    var lux = document.getElementById("lux"), svg = document.getElementById("calcsvg");
+    function planck(nm, T) { var l = nm * 1e-9; return 1 / (Math.pow(l, 5) * (Math.exp(1.4388e-2 / (l * T)) - 1)); }
+    function calc() {
+      var T = +cct.value, E = [], ph = 0, lx = 0, mx = 0, i, nm;
+      for (i = 0; i < S.v.length; i++) { nm = 380 + i; E[i] = planck(nm, T); if (E[i] > mx) mx = E[i]; ph += S.p[i] * E[i] * nm * 8.359e-3; lx += 683 * E[i] * S.v[i]; }
+      var k = ph / lx;
+      document.getElementById("cctv").textContent = T + " K";
+      document.getElementById("kv").textContent = (k * 1000).toFixed(1);
+      document.getElementById("pv").textContent = Math.round(k * (+lux.value || 0)).toLocaleString("en-US");
+      var W = 520, H = 150, L = 4, B = 18, x = function (n) { return L + (n - 380) / 400 * (W - 2 * L); }, y = function (v) { return 6 + (1 - v / mx) * (H - B - 6); };
+      var pts = "", par = "";
+      for (i = 0; i < E.length; i += 4) { pts += " " + x(380 + i).toFixed(1) + "," + y(E[i]).toFixed(1); }
+      var p0 = x(400), p1 = x(700);
+      svg.innerHTML = '<rect class="band" x="' + p0 + '" y="6" width="' + (p1 - p0) + '" height="' + (H - B - 6) + '"/>' +
+        '<polygon class="spd" points="' + x(380) + ',' + y(0) + pts + ' ' + x(776) + ',' + y(0) + '"/><polyline class="spd-line" points="' + pts + '"/>' +
+        '<line class="ax" x1="' + L + '" x2="' + (W - L) + '" y1="' + y(0) + '" y2="' + y(0) + '"/>' +
+        [400, 500, 600, 700].map(function (n) { return '<text class="tk" x="' + x(n) + '" y="' + (H - 4) + '" text-anchor="middle">' + n + ' nm</text>'; }).join("");
+    }
+    cct.addEventListener("input", calc); lux.addEventListener("input", calc); calc();
+  }
 })();
 

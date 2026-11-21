@@ -116,10 +116,12 @@ for k, (y, x, b) in enumerate(renders, 1):
 cs = Image.open("case study UW.png").convert("RGBA")
 save_paper(cs, "case-study", s=1100, l=2020)
 
-# the two Grasshopper definitions
+# the two Grasshopper definitions, in black and white (grey components, ink and paper)
 for src, name in (("Three_channelworkflow.png", "workflow-three-channel"), ("hyperspectral_workflow.png", "workflow-hyperspectral")):
     im = Image.open(src).convert("RGBA")
     im = im.crop(im.getbbox())
+    gray = im.convert("LA").convert("RGBA")
+    gray.putalpha(im.getchannel("A")); im = gray; del gray
     sizes = {w: im.resize((w, round(im.height * w / im.width)), Image.LANCZOS) for w in (1400, 9000)}
     del im
     for tag, w in (("", 1400), ("-l", 9000)):

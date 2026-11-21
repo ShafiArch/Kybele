@@ -20,6 +20,11 @@ No build step; `.nojekyll` makes GitHub serve the files as they are.
 | Originals, never changed | `Simulation for Food_v3.pptx` (Radiance Workshop 2026), `Kybele_logo_black and orange.png`, `case study UW.png`, `Three_channelworkflow.png`, `hyperspectral_workflow.png` |
 | The script that makes `img/` | `tools/build_img.py` (Pillow, numpy, python-pptx; LibreOffice for the monthly renders) |
 
+The page runs: plants and light, spectral conversion (lux to PPFD, with a calculator that
+computes the factor k for a black body source from the V(λ) and PAR curves), the tool, the UW
+greenhouse case study (the model beside the PPFD and DLI heat maps, whose time axes are aligned),
+the Grasshopper definitions (shown in black and white) and credits.
+
 The charts (spectral responses; DLI, deficit and lamp hours) are drawn in SVG in `index.html`
 from the data inside the presentation's charts, so they follow the theme. The logo is the grey
 and orange version from the presentation.
@@ -32,7 +37,8 @@ WebP, about 1600 px wide.
 
 ## Credits
 
-Mehlika Inanici (research lead), Gundula Proksch, Shafiul Islam; University of Washington,
+Mehlika Inanici (research lead), Gundula Proksch (research advisor), Shafiul Islam
+(developer, researcher); Mehlika Inanici is always named before Shafiul Islam; University of Washington,
 Department of Architecture. Presented as "Simulation for Food: Evaluating Urban Greenhouses"
 at the 24th International Radiance Workshop, Seattle, September 1, 2026.
 
